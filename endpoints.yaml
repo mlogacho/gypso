@@ -1,0 +1,72 @@
+- name: agricola_registros_actividades
+  method: GET
+  path: /GenesisWeb/casageo/controlador/agricola/get/
+  params:
+    op: agri_regi_actividades
+    e: '001'
+    c: '30'
+  pagination:
+    style: none
+  watermark_field: fecha
+  primary_key: [codigo]
+  bronze_table: genesis_agricola_actividades
+
+- name: flor_bancos
+  method: GET
+  path: /GenesisWeb/casageo/controlador/floreria/get/
+  params:
+    op: agri_camas
+    e: '001'
+  pagination:
+    style: none
+  watermark_field: none
+  primary_key: [codigo]
+  bronze_table: genesis_flor_bancos
+
+- name: flor_traslado_camas
+  method: GET
+  path: /GenesisWeb/casageo/controlador/floreria/get/
+  params:
+    op: flor_traslado_camas
+    e: '001'
+  pagination:
+    style: none
+  watermark_field: none
+  primary_key: [codigo]
+  bronze_table: genesis_flor_traslado_camas
+
+- name: flor_lote_siembra
+  method: GET
+  path: /GenesisWeb/casageo/controlador/floreria/get/
+  params:
+    op: flor_lote_siembra
+    e: '001'
+  pagination:
+    style: none
+  watermark_field: none
+  primary_key: [codigo]
+  bronze_table: genesis_flor_lote_siembra
+
+- name: flor_cosecha_list
+  method: GET
+  path: /GenesisWeb/casageo/controlador/floreria/get/
+  params:
+    op: flor_cosecha_list
+    e: '001'
+  pagination:
+    style: none
+  watermark_field: none
+  primary_key: [codigo]
+  bronze_table: genesis_flor_cosecha_list
+
+- name: flor_proceso_cosechas_in
+  method: GET
+  path: /GenesisWeb/casageo/controlador/floreria/get/
+  params:
+    op: flor_proceso_cosechas_in
+    e: '001'
+  pagination:
+    style: none
+  watermark_field: none
+  primary_key: [codigo]
+  bronze_table: genesis_flor_proceso_cosechas_in
