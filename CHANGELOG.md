@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2026-09-30
+
+### Added
+- Implementación de **memoria de conversación contextual** en el Bot de Telegram (`sliding window` de mensajes por usuario) para mantener el hilo de la charla en tiempo real.
+- Optimización del flujo de interacción eliminando saludos y muletillas de despedida repetitivas en cada respuesta una vez iniciada la conversación.
+- Calibración del lenguaje del asistente IA a un tono atento, fluido, conciso y profesional, yendo directo a la información solicitada en tallos.
+
 ## [1.2.0] - 2026-09-30
 
 ### Added
