@@ -1,0 +1,128 @@
+[
+  {
+    "timestamp": "2026-09-30T18:07:04.888Z",
+    "kpis": {
+      "produccionSemanalTallos": 54950,
+      "unidad": "tallos",
+      "etapasCultivo": {
+        "etapa1_bancos": {
+          "nombre": "Bancos (Propagación)",
+          "camasMadres": 45,
+          "plantasMadres": 120000,
+          "esquejesCosechados": 54950
+        },
+        "etapa2_traslado": {
+          "nombre": "Traslado (Enraizamiento)",
+          "bandejasEnraizamiento": 350,
+          "tallosEnraizando": 48000
+        },
+        "etapa3_lote_siembra": {
+          "nombre": "Lote Siembra",
+          "lotesActivos": 12,
+          "plantasSembradas": 145000
+        },
+        "etapa4_cosecha": {
+          "nombre": "Cosecha",
+          "tallosCosechados": 52000,
+          "diferenciaPendienteCampo": 28000
+        },
+        "etapa5_clasificacion": {
+          "nombre": "Clasificación (Cuarto Caliente / Postcosecha)",
+          "totalIngresado": 52000,
+          "tallosGradoA": 11000,
+          "tallosGradoB": 24000,
+          "tallosGradoC": 32000,
+          "tallosNacional": 2000,
+          "desperdicioTallos": 3000,
+          "porcentajeDesperdicio": 5.7,
+          "diasAperturaTeorico": 7,
+          "porcentajeAperturaMeta": 80
+        }
+      },
+      "disponibilidadVenta": {
+        "ordenVentaDisponibleTallos": 42000,
+        "stockCuartoFrioTallos": 28000,
+        "stockCuartoCalienteTallos": 14000,
+        "pedidosComprometidosTallos": 26000,
+        "atpNetoDisponibleTallos": 16000
+      },
+      "cuposVendedores": [
+        {
+          "vendedor": "Santiago Barrionuevo",
+          "cupoAsignado": 5000,
+          "reservado": 3500,
+          "disponible": 1500
+        },
+        {
+          "vendedor": "Giovanni Estrella",
+          "cupoAsignado": 5000,
+          "reservado": 4200,
+          "disponible": 800
+        },
+        {
+          "vendedor": "Finca (Clientes Fijos)",
+          "cupoAsignado": 30000,
+          "reservado": 18300,
+          "disponible": 11700
+        }
+      ],
+      "ventasGeneral": {
+        "periodo": "01/09/2026 - 30/09/2026",
+        "totalTallosVendidos": 24489,
+        "totalVentasUSD": 68000,
+        "precioPromedioTallo": 2.77,
+        "documentos": 14,
+        "ultimasVentas": [
+          {
+            "factura": "001-002-000000627",
+            "doc": "626",
+            "cliente": "EXPORTADORA DE FLORES EXPOFLOR CIA. LTDA.",
+            "ciudad": "QUITO",
+            "tallos": 5000,
+            "totalUSD": 13850
+          },
+          {
+            "factura": "001-002-000000632",
+            "doc": "631",
+            "cliente": "Lumea FlowersGroup S.A.S",
+            "ciudad": "BOGOTA",
+            "tallos": 3200,
+            "totalUSD": 8900
+          },
+          {
+            "factura": "001-002-000000626",
+            "doc": "625",
+            "cliente": "EQUATOR FLOWER IMPORTERS LLC",
+            "ciudad": "MIAMI / USA",
+            "tallos": 4500,
+            "totalUSD": 12600
+          },
+          {
+            "factura": "001-002-000000625",
+            "doc": "624",
+            "cliente": "IRIDA TRADE",
+            "ciudad": "KAZAKHSTAN",
+            "tallos": 2800,
+            "totalUSD": 7840
+          },
+          {
+            "factura": "001-002-000000624",
+            "doc": "623",
+            "cliente": "EC FLOWER SHOP",
+            "ciudad": "ORLANDO / USA",
+            "tallos": 1800,
+            "totalUSD": 4950
+          },
+          {
+            "factura": "001-002-000000623",
+            "doc": "622",
+            "cliente": "COLOR REPUBLIC LLC",
+            "ciudad": "USA",
+            "tallos": 7189,
+            "totalUSD": 19860
+          }
+        ]
+      }
+    }
+  }
+]

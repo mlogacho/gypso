@@ -2,16 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.2.0] - 2026-09-30
 
 ### Added
-- Configuración maestra en `endpoints.yaml` para incluir los módulos de floristería: `flor_bancos`, `flor_traslado_camas`, `flor_lote_siembra`, `flor_cosecha_list`.
-- Lógica de extracción de datos dinámicos en `update_silver.js` (Capa Silver) para los KPIs del Dashboard:
-  - Producción Semanal (deduplicada por `codigo`).
-  - Calidad en gramos calculada según tallos cosechados vs bunches empacados.
-  - OTIF (ponderado) con base en la salud e integridad de los lotes/bancos sin pérdidas.
-  - Backlog de producción, calculado mediante la resta de proyecciones de campo contra cosechas efectivas.
-- Implementación de un historial acumulativo `history_kpis.json` para dibujar gráficas temporales de los KPIs en el front.
+- Configuración maestra en `endpoints.yaml` para incluir los módulos de floristería: `flor_bancos`, `flor_traslado_camas`, `flor_lote_siembra`, `flor_cosecha_list`, `flor_proceso_cosechas_in`, `flor_orden_venta` y `facturacion_informe_ventas_general`.
+- Transformación completa a la unidad de negocio **TALLOS** (eliminación de kg).
+- Modelado y visualización del flujo completo de cultivo en 5 etapas:
+  1. Bancos (Propagación / Plantas Madres)
+  2. Traslado (Enraizamiento / Bandejas)
+  3. Lote Siembra (Siembra en campo)
+  4. Cosecha (Tallos cosechados vs. diferencia pendiente en campo)
+  5. Clasificación (Cuarto Caliente / Postcosecha con Grados A, B, C, Nacional, Desperdicio compost y curva de apertura al 80%).
+- Módulo de Disponibilidad ATP en tallos y Semáforo de Cupos por Vendedor (Santiago, Giovanni, Finca).
+- Módulo de Facturación e Informes de Ventas General extraído desde Génesis ERP con desglose por cliente, destino y precio unitario por tallo.
+- Actualización de comandos y prompts del Bot de Telegram (`/hoy`, `/etapas`, `/apertura`, `/disponible`, `/cupos`, `/ventas`, `/puedo`).
+- Actualización de la Mini App Comercial con dashboard interactivo glassmorphism optimizado para iPad y presentación en ExpoFlor.
 
 ### Fixed
 - Error de lectura de JSON donde los parámetros incorrectos de la API (ej: `flor_cosecha_doc` y `flor_proceso_doc`) retornaban HTML; corregido y sustituido por `flor_cosecha_list`.

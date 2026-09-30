@@ -70,3 +70,27 @@
   watermark_field: none
   primary_key: [codigo]
   bronze_table: genesis_flor_proceso_cosechas_in
+
+- name: flor_orden_venta
+  method: GET
+  path: /GenesisWeb/casageo/controlador/floreria/get/
+  params:
+    op: flor_orden_venta
+    e: '001'
+  pagination:
+    style: none
+  watermark_field: none
+  primary_key: [codigo]
+  bronze_table: genesis_flor_orden_venta
+
+- name: facturacion_informe_ventas_general
+  method: GET
+  path: /GenesisWeb/casageo/controlador/facturacion/get/
+  params:
+    op: informe_ventas_general
+    e: '001'
+  pagination:
+    style: none
+  watermark_field: fecha
+  primary_key: [factura, doc]
+  bronze_table: genesis_facturacion_informe_ventas_general
