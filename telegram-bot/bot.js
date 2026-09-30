@@ -44,6 +44,30 @@ function getSilver() {
     }
 }
 
+// --- Comando de Bienvenida / Start ---
+bot.command('start', (ctx) => {
+    const name = ctx.from?.first_name || 'amigo';
+    ctx.reply(
+        `¡Hola, ${name}! 👋 Qué gusto saludarte.\n\n` +
+        `Soy tu asistente de *Gypsophila Polar Bear* 🌸. Estoy aquí para darte una mano con la información en tiempo real de nuestra finca, disponibilidad de tallos, cupos de venta y facturación.\n\n` +
+        `¿En qué te puedo colaborar hoy? Puedes consultarme directamente escribiéndome lo que necesites, o usar estos accesos rápidos:\n\n` +
+        `📊 /hoy - Resumen ejecutivo del día\n` +
+        `🌱 /etapas - Estado de las 5 fases de cultivo\n` +
+        `🚪 /apertura - Cuarto caliente y apertura\n` +
+        `📦 /disponible - Tallos libres para vender (ATP)\n` +
+        `👥 /cupos - Semáforo de cupos por vendedor\n` +
+        `💰 /ventas - Reporte de ventas y facturación\n` +
+        `📝 /puedo [tallos] [semana] - Validar reserva rápida\n\n` +
+        `_¡Dime cómo te ayudo y lo revisamos al instante!_ 😊`,
+        {
+            parse_mode: 'Markdown',
+            ...Markup.inlineKeyboard([
+                Markup.button.webApp('📱 Abrir Torre de Control Polar Bear', process.env.MINI_APP_URL || 'https://gypso.nexaflow-ia.com')
+            ])
+        }
+    );
+});
+
 // --- Comandos de Producción y Fases de Cultivo ---
 bot.command('hoy', (ctx) => {
     const silver = getSilver();
@@ -52,11 +76,11 @@ bot.command('hoy', (ctx) => {
     const disp = silver.disponibilidadVenta?.atpNetoDisponibleTallos || 16000;
 
     ctx.reply(
-        `📊 *CIERRE DEL DÍA - GYPSOPHILA POLAR BEAR*\n\n` +
-        `🌸 *Cosecha:* ${cosechados.toLocaleString()} tallos\n` +
-        `🌾 *Pendiente en campo:* ${pendientes.toLocaleString()} tallos\n` +
-        `📦 *Disponible para Venta (ATP):* ${disp.toLocaleString()} tallos\n\n` +
-        `_Datos sincronizados desde Génesis ERP (Floración -> Registros)_`,
+        `¡Hola! Claro que sí, con mucho gusto te comparto cómo van las labores el día de hoy 🌸:\n\n` +
+        `🌾 *Cosecha de hoy:* *${cosechados.toLocaleString()} tallos*\n` +
+        `🌱 *Por cosechar en campo:* *${pendientes.toLocaleString()} tallos*\n` +
+        `📦 *Disponible listo para venta (ATP):* *${disp.toLocaleString()} tallos*\n\n` +
+        `_Todo marcha según lo programado en Génesis ERP. ¿Deseas consultar alguna etapa en detalle?_ 😊`,
         { parse_mode: 'Markdown' }
     );
 });
@@ -65,13 +89,13 @@ bot.command('etapas', (ctx) => {
     const s = getSilver();
     const e = s.etapasCultivo || {};
     ctx.reply(
-        `🌱 *ETAPAS DE CULTIVO (GÉNESIS)*\n\n` +
-        `1️⃣ *1. Bancos (Propagación):* ${e.etapa1_bancos?.camasMadres || 45} camas · ${(e.etapa1_bancos?.plantasMadres || 120000).toLocaleString()} plantas madres\n` +
-        `2️⃣ *2. Traslado (Enraizamiento):* ${e.etapa2_traslado?.bandejasEnraizamiento || 350} bandejas · ${(e.etapa2_traslado?.tallosEnraizando || 48000).toLocaleString()} tallos enraizando\n` +
-        `3️⃣ *3. Lote Siembra:* ${e.etapa3_lote_siembra?.lotesActivos || 12} lotes · ${(e.etapa3_lote_siembra?.plantasSembradas || 145000).toLocaleString()} plantas\n` +
-        `4️⃣ *4. Cosecha:* ${(e.etapa4_cosecha?.tallosCosechados || 52000).toLocaleString()} tallos cosechados (Diferencia: ${(e.etapa4_cosecha?.diferenciaPendienteCampo || 28000).toLocaleString()} tallos)\n` +
-        `5️⃣ *5. Clasificación (Cuarto Caliente):* A: ${(e.etapa5_clasificacion?.tallosGradoA || 11000).toLocaleString()} | B: ${(e.etapa5_clasificacion?.tallosGradoB || 24000).toLocaleString()} | C: ${(e.etapa5_clasificacion?.tallosGradoC || 32000).toLocaleString()} | Nac: ${(e.etapa5_clasificacion?.tallosNacional || 2000).toLocaleString()} | Desperdicio: ${e.etapa5_clasificacion?.porcentajeDesperdicio || 5.7}%\n\n` +
-        `_Todas las unidades en tallos._`,
+        `¡Con mucho gusto! Aquí te detallo cómo avanza cada una de nuestras 5 etapas de cultivo en la finca 🌱:\n\n` +
+        `1️⃣ *1. Bancos (Propagación):*\n   Tenemos *${e.etapa1_bancos?.camasMadres || 45} camas madres* con *${(e.etapa1_bancos?.plantasMadres || 120000).toLocaleString()} plantas madres* produciendo esquejes de primera calidad.\n\n` +
+        `2️⃣ *2. Traslado (Enraizamiento):*\n   Contamos con *${e.etapa2_traslado?.bandejasEnraizamiento || 350} bandejas* en proceso, cuidando *${(e.etapa2_traslado?.tallosEnraizando || 48000).toLocaleString()} tallos* enraizando.\n\n` +
+        `3️⃣ *3. Lote Siembra:*\n   Tenemos *${e.etapa3_lote_siembra?.lotesActivos || 12} lotes activos* en campo con un total de *${(e.etapa3_lote_siembra?.plantasSembradas || 145000).toLocaleString()} plantas* sembradas.\n\n` +
+        `4️⃣ *4. Cosecha:*\n   Llevamos cosechados *${(e.etapa4_cosecha?.tallosCosechados || 52000).toLocaleString()} tallos*, y nos quedan todavía *${(e.etapa4_cosecha?.diferenciaPendienteCampo || 28000).toLocaleString()} tallos pendientes* en campo por recolectar.\n\n` +
+        `5️⃣ *5. Clasificación (Cuarto Caliente):*\n   • Grado A: *${(e.etapa5_clasificacion?.tallosGradoA || 11000).toLocaleString()} tallos*\n   • Grado B: *${(e.etapa5_clasificacion?.tallosGradoB || 24000).toLocaleString()} tallos*\n   • Grado C: *${(e.etapa5_clasificacion?.tallosGradoC || 32000).toLocaleString()} tallos*\n   • Nacional: *${(e.etapa5_clasificacion?.tallosNacional || 2000).toLocaleString()} tallos*\n   • Desperdicio/Compost: *${e.etapa5_clasificacion?.porcentajeDesperdicio || 5.7}%*\n\n` +
+        `_¿Te gustaría revisar algo más sobre algún lote o variedad? ¡Avísame nomás!_ 👍`,
         { parse_mode: 'Markdown' }
     );
 });
@@ -80,11 +104,12 @@ bot.command('apertura', (ctx) => {
     const s = getSilver();
     const e5 = s.etapasCultivo?.etapa5_clasificacion || {};
     ctx.reply(
-        `🚪 *CLASIFICACIÓN Y CUARTO CALIENTE*\n\n` +
-        `🕒 *Días apertura teórico:* ${e5.diasAperturaTeorico || 7} días\n` +
-        `🎯 *Meta apertura:* ${e5.porcentajeAperturaMeta || 80}%\n` +
-        `🌡️ *Stock en Cuarto Caliente:* ${(s.disponibilidadVenta?.stockCuartoCalienteTallos || 14000).toLocaleString()} tallos\n` +
-        `❄️ *Stock en Cuarto Frío:* ${(s.disponibilidadVenta?.stockCuartoFrioTallos || 28000).toLocaleString()} tallos`,
+        `¡Buenas! Te paso el reporte fresquito de nuestras cámaras y clasificación 🚪🌡️:\n\n` +
+        `⏱️ *Tiempo de apertura teórico:* *${e5.diasAperturaTeorico || 7} días*\n` +
+        `🎯 *Objetivo de apertura:* *${e5.porcentajeAperturaMeta || 80}%* de flor abierta\n` +
+        `🔥 *En Cuarto Caliente (abriendo):* *${(s.disponibilidadVenta?.stockCuartoCalienteTallos || 14000).toLocaleString()} tallos*\n` +
+        `❄️ *En Cuarto Frío (listos para despacho):* *${(s.disponibilidadVenta?.stockCuartoFrioTallos || 28000).toLocaleString()} tallos*\n\n` +
+        `_La flor está abriendo con excelente vigor y consistencia. ¡Quedo a la orden si necesitas apartar pedidos!_ ✨`,
         { parse_mode: 'Markdown' }
     );
 });
@@ -94,13 +119,13 @@ bot.command('disponible', (ctx) => {
     const s = getSilver();
     const d = s.disponibilidadVenta || {};
     ctx.reply(
-        `📈 *DISPONIBILIDAD PARA VENTA (ORDEN DE VENTA / ATP)*\n\n` +
-        `✅ *Total en Orden de Venta:* ${(d.ordenVentaDisponibleTallos || 42000).toLocaleString()} tallos\n` +
-        `❄️ *Cuarto Frío (Listo):* ${(d.stockCuartoFrioTallos || 28000).toLocaleString()} tallos\n` +
-        `🔥 *Cuarto Caliente (Por abrir):* ${(d.stockCuartoCalienteTallos || 14000).toLocaleString()} tallos\n` +
-        `📝 *Pedidos Comprometidos:* ${(d.pedidosComprometidosTallos || 26000).toLocaleString()} tallos\n` +
-        `🌟 *ATP Neto Libre:* ${(d.atpNetoDisponibleTallos || 16000).toLocaleString()} tallos\n\n` +
-        `_Usa /puedo [tallos] [semana] para consultar reservas o /cupos para ver cuotas por vendedor._`,
+        `¡Hola! Con gusto, aquí tienes el panorama completo de tallos disponibles para comercializar 📈:\n\n` +
+        `📋 *Total en Orden de Venta:* *${(d.ordenVentaDisponibleTallos || 42000).toLocaleString()} tallos*\n` +
+        `❄️ *En Cuarto Frío (Entrega inmediata):* *${(d.stockCuartoFrioTallos || 28000).toLocaleString()} tallos*\n` +
+        `🔥 *En Cuarto Caliente (Próximos días):* *${(d.stockCuartoCalienteTallos || 14000).toLocaleString()} tallos*\n` +
+        `📝 *Pedidos ya comprometidos:* *${(d.pedidosComprometidosTallos || 26000).toLocaleString()} tallos*\n` +
+        `🌟 *ATP Neto Libre para vender:* *${(d.atpNetoDisponibleTallos || 16000).toLocaleString()} tallos*\n\n` +
+        `_Puedes escribir /puedo [tallos] [semana] para verificar si puedes comprometer una orden, o usar /cupos para ver tus límites disponibles._ ¡Buen día de ventas! 🚀`,
         { parse_mode: 'Markdown' }
     );
 });
@@ -108,15 +133,17 @@ bot.command('disponible', (ctx) => {
 bot.command('cupos', (ctx) => {
     const s = getSilver();
     const cupos = s.cuposVendedores || [];
-    let msg = `👥 *SEMÁFORO DE CUPOS POR VENDEDOR*\n\n`;
+    let msg = `¡Hola! Aquí tienes el estado actual de los cupos por vendedor para que organicemos los pedidos sin contratiempos 👥:\n\n`;
     cupos.forEach(c => {
         const pct = Math.round((c.reservado / c.cupoAsignado) * 100);
         const icon = pct >= 90 ? '🔴' : pct >= 70 ? '🟡' : '🟢';
-        msg += `${icon} *${c.vendedor}:*\n` +
-               `  - Cupo: ${c.cupoAsignado.toLocaleString()} tallos\n` +
-               `  - Reservado: ${c.reservado.toLocaleString()} tallos (${pct}%)\n` +
-               `  - Libre: ${c.disponible.toLocaleString()} tallos\n\n`;
+        const estado = pct >= 90 ? 'Cerca del límite' : pct >= 70 ? 'Buen ritmo de venta' : 'Cupo amplio disponible';
+        msg += `${icon} *${c.vendedor}* (${estado})\n` +
+               `   • Cupo Asignado: *${c.cupoAsignado.toLocaleString()} tallos*\n` +
+               `   • Reservado: *${c.reservado.toLocaleString()} tallos* (${pct}%)\n` +
+               `   • Disponible libre: *${c.disponible.toLocaleString()} tallos*\n\n`;
     });
+    msg += `_Si requieres una ampliación de cupo para un cliente grande, contáctate con la administración de la finca._ ¡Siempre a las órdenes! 👍`;
     ctx.reply(msg, { parse_mode: 'Markdown' });
 });
 
@@ -124,19 +151,26 @@ bot.command('ventas', (ctx) => {
     const s = getSilver();
     const v = s.ventasGeneral || {};
     ctx.reply(
-        `💰 *INFORME DE VENTAS GENERAL (GÉNESIS)*\n\n` +
-        `📅 *Período:* ${v.periodo || 'Mes Actual'}\n` +
-        `🌸 *Tallos Vendidos:* ${(v.totalTallosVendidos || 24489).toLocaleString()} tallos\n` +
-        `💵 *Facturación:* $${(v.totalVentasUSD || 68000).toLocaleString()} USD\n` +
-        `🏷️ *Precio Promedio:* $${v.precioPromedioTallo || 2.77} USD / tallo\n` +
-        `📄 *Documentos emitidos:* ${v.documentos || 14}`,
+        `¡Excelente! Con gusto te comparto el resumen de ventas facturadas en Génesis 💰:\n\n` +
+        `📅 *Período:* ${v.periodo || 'Mes en curso'}\n` +
+        `🌸 *Tallos entregados/vendidos:* *${(v.totalTallosVendidos || 24489).toLocaleString()} tallos*\n` +
+        `💵 *Facturación total:* *$${(v.totalVentasUSD || 68000).toLocaleString()} USD*\n` +
+        `🏷️ *Precio promedio logrado:* *$${v.precioPromedioTallo || 2.77} USD / tallo*\n` +
+        `📄 *Documentos emitidos:* ${v.documentos || 14} facturas/notas\n\n` +
+        `_¡Muy buen desempeño comercial! Si necesitas el detalle de clientes, abre la Mini App._ 📊`,
         { parse_mode: 'Markdown' }
     );
 });
 
 bot.command('puedo', (ctx) => {
     const text = ctx.message.text.split(' ');
-    if (text.length < 3) return ctx.reply('Formato incorrecto. Usa: /puedo [cantidad_tallos] [semana]');
+    if (text.length < 3) {
+        return ctx.reply(
+            `¡Hola! Para ayudarte a consultar la disponibilidad, por favor indícame la cantidad de tallos y la semana. Así:\n\n` +
+            `👉 \`/puedo 2000 42\`\n\n` +
+            `_(Ejemplo: 2000 tallos para la semana 42)_`
+        );
+    }
     
     const tallos = parseInt(text[1]);
     const semana = text[2];
@@ -145,23 +179,21 @@ bot.command('puedo', (ctx) => {
     
     if (tallos <= atpLibre) {
         ctx.reply(
-            `✅ *RESERVA CONFIRMADA (ATP SUFICIENTE)*\n\n` +
-            `Sí puedes comprometer *${tallos.toLocaleString()} tallos* para la semana ${semana}.\n` +
-            `Quedan ${(atpLibre - tallos).toLocaleString()} tallos disponibles en ATP.\n\n` +
-            `👇 Usa la Mini App para registrar la cotización y reservar tu cupo.`,
+            `¡Buenas noticias! 🎉 Sí disponemos de capacidad.\n\n` +
+            `Puedes comprometer con total tranquilidad *${tallos.toLocaleString()} tallos* para la *semana ${semana}*.\n` +
+            `Nos quedarían todavía *${(atpLibre - tallos).toLocaleString()} tallos libres* en la banda segura de ATP.\n\n` +
+            `👇 Si gustas, puedes registrar la reserva de inmediato aquí:`,
             {
                 parse_mode: 'Markdown',
                 ...Markup.inlineKeyboard([
-                    Markup.button.webApp('📝 Crear Cotización / Reserva', process.env.MINI_APP_URL || 'https://tu-mini-app.com')
+                    Markup.button.webApp('📝 Registrar Cotización / Reserva', process.env.MINI_APP_URL || 'https://gypso.nexaflow-ia.com')
                 ])
             }
         );
     } else {
         ctx.reply(
-            `⚠️ *EXCEDE ATP DISPONIBLE*\n\n` +
-            `Solicitaste: ${tallos.toLocaleString()} tallos.\n` +
-            `Disponible actual: ${atpLibre.toLocaleString()} tallos.\n` +
-            `Por favor solicita una ampliación de cupo a gerencia/finca.`,
+            `¡Hola! Te comento que para la semana ${semana} solicitaste *${tallos.toLocaleString()} tallos*, pero nuestro ATP neto libre en este momento es de *${atpLibre.toLocaleString()} tallos* ⚠️.\n\n` +
+            `Para no comprometer el stock de otros pedidos, te sugiero coordinar una ampliación de cupo con la finca o ajustar el volumen. ¿Quieres que consultemos otra semana?`,
             { parse_mode: 'Markdown' }
         );
     }
@@ -172,41 +204,49 @@ bot.on('message', async (ctx) => {
         try {
             const data = JSON.parse(ctx.message.web_app_data.data);
             if (data.action === 'create_quote') {
-                const { cliente, semana, tallos, precio } = data.data;
+                const { cliente, semana, tallos, precio, vendedor } = data.data;
                 ctx.reply(
-                    `📝 *COTIZACIÓN REGISTRADA*\n\n` +
+                    `¡Excelente trabajo! 📝 He registrado con éxito tu cotización:\n\n` +
                     `👤 *Cliente:* ${cliente}\n` +
-                    `📅 *Semana:* ${semana}\n` +
-                    `🌸 *Volumen:* ${parseInt(tallos).toLocaleString()} tallos\n` +
-                    `💵 *Precio:* $${precio} USD / tallo\n\n` +
-                    `_Esta reserva tentativa ha ajustado el ATP y cupo del vendedor automáticamente._`,
+                    `👨‍💼 *Vendedor:* ${vendedor || 'Equipo Comercial'}\n` +
+                    `📅 *Semana de Despacho:* ${semana}\n` +
+                    `🌸 *Volumen Reservado:* *${parseInt(tallos).toLocaleString()} tallos*\n` +
+                    `💵 *Precio Pactado:* *$${precio} USD / tallo*\n\n` +
+                    `_El ATP y tu cupo disponible han sido actualizados en el sistema. ¡Muchos éxitos con este despacho!_ 🤝`,
                     { parse_mode: 'Markdown' }
                 );
             }
         } catch (e) {
-            ctx.reply('Error procesando la cotización de la Mini App.');
+            ctx.reply('Ups, tuve un pequeño inconveniente procesando la cotización. Por favor intenta nuevamente.');
         }
     } else if (ctx.message.text && !ctx.message.text.startsWith('/')) {
         try {
             const silverData = getSilver();
+            const senderName = ctx.from?.first_name || 'compañero';
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
                 messages: [
                     { 
                         role: "system", 
-                        content: `Eres el asistente de operaciones y comercial de Gypsophila Polar Bear. 
-                        REGLA FUNDAMENTAL DE NEGOCIO: La unidad de medida es SIEMPRE "TALLOS" (NO existe ni se usa peso ni kilogramos).
-                        Tienes acceso en tiempo real a los datos extraídos de Génesis ERP (Floración -> Registros y Facturación -> Informes -> Ventas -> Ventas General).
-                        ESTOS SON LOS DATOS EN TIEMPO REAL: ${JSON.stringify(silverData)}.
-                        El flujo de cultivo consta de 5 etapas:
-                        1. Bancos (Propagación / Plantas Madres)
-                        2. Traslado (Enraizamiento / Bandejas)
-                        3. Lote Siembra (Siembra en campo)
-                        4. Cosecha (Tallos cosechados vs diferencia pendiente en campo)
-                        5. Clasificación (Cuarto Caliente / Postcosecha con Grado A, B, C, Nacional, Desperdicio, y días de apertura al 80%).
-                        Orden de Venta define la disponibilidad para venta (ATP en tallos) y existen cupos por vendedor.
-                        Facturación -> Informes -> Ventas General contiene los tallos vendidos y dólares facturados.
-                        Responde de forma ejecutiva, precisa y cordial.` 
+                        content: `Eres el asistente oficial, atento y cercano de la finca de flores Gypsophila Polar Bear. 
+                        Tu trato es extremadamente cordial, amable, educado, servicial y en un tono coloquial respetuoso (estilo profesional ecuatoriano / latinoamericano cercano: "¡Hola!", "¡Qué gusto saludarte!", "Con mucho gusto te ayudo", "Te cuento cómo estamos...", "Quedo a tus órdenes").
+                        
+                        REGLAS FUNDAMENTALES:
+                        1. UNIDAD DE MEDIDA: La unidad es SIEMPRE "TALLOS" (NUNCA menciones kilogramos, kilos ni peso).
+                        2. PROCESO DE CULTIVO (5 FASES):
+                           - Fase 1: Bancos (Propagación / Plantas Madres)
+                           - Fase 2: Traslado (Enraizamiento / Bandejas)
+                           - Fase 3: Lote Siembra (Siembra en campo)
+                           - Fase 4: Cosecha (Tallos cosechados vs diferencia pendiente en campo)
+                           - Fase 5: Clasificación (Cuarto Caliente / Postcosecha con Grados A, B, C, Nacional, Desperdicio compost y meta de apertura al 80% en 7 días teóricos).
+                        3. COMERCIAL:
+                           - Orden de Venta define la disponibilidad para venta (ATP en tallos).
+                           - Stock en Cuarto Frío (listo para entrega inmediata) y Cuarto Caliente (en proceso de apertura).
+                           - Existen cupos asignados por vendedor (Santiago 5k, Giovanni 5k, Finca 30k) para evitar sobreventas.
+                           - Facturación -> Informes -> Ventas General contiene los tallos vendidos y dólares facturados en Génesis ERP.
+                        4. DATOS EN TIEMPO REAL: Utiliza siempre la información exacta del JSON que tienes aquí: ${JSON.stringify(silverData)}.
+                        
+                        Responde de forma clara, directa, motivadora y muy atenta.` 
                     },
                     { role: "user", content: ctx.message.text }
                 ]
@@ -214,13 +254,13 @@ bot.on('message', async (ctx) => {
             ctx.reply(response.choices[0].message.content);
         } catch (err) {
             console.error("OpenAI Error:", err);
-            ctx.reply('Lo siento, tuve un problema procesando tu mensaje.');
+            ctx.reply('Mil disculpas, tuve una pequeña dificultad al consultar la información. ¿Podrías preguntarme de nuevo, por favor? Con gusto lo reviso.');
         }
     }
 });
 
 // Lanzar el bot
-bot.launch().then(() => console.log('Bot de Telegram iniciado correctamente.'));
+bot.launch().then(() => console.log('Bot de Telegram iniciado correctamente con lenguaje cordial y atento.'));
 
 // Lanzar servidor Express para webhooks y API de la Mini App
 const PORT = process.env.PORT || 3000;
