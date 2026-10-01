@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2026-10-01
+
+### Added
+- Automatización de la tarea programada de sincronización con Génesis ERP cada 24 horas (`0 4 * * *` en Crontab).
+- Sistema de bitácora y registro estructurado (`sync.log`) con marcas de tiempo (`[YYYY-MM-DD HH:MM:SS]`) y rotación automática para proteger el almacenamiento del servidor.
+- Persistencia histórica de sincronizaciones diarias (hasta 365 registros) en `history_kpis.json` expuesta en el Dashboard (`HistoryView` / `Bitácora Génesis`) y la API.
+
 ## [1.2.1] - 2026-09-30
 
 ### Added

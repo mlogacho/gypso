@@ -192,10 +192,20 @@ if (fs.existsSync(historyFile)) {
     history = JSON.parse(fs.readFileSync(historyFile, 'utf8'));
   } catch (e) {}
 }
+
 history.push({
   timestamp: new Date().toISOString(),
+  fecha: new Date().toLocaleDateString('es-EC', { timeZone: 'America/Guayaquil' }),
+  hora: new Date().toLocaleTimeString('es-EC', { timeZone: 'America/Guayaquil' }),
+  status: "EXITO",
   kpis: silverData
 });
+
+// Mantener hasta 365 registros de sincronización diaria (1 año completo)
+if (history.length > 365) {
+  history = history.slice(-365);
+}
+
 fs.writeFileSync(historyFile, JSON.stringify(history, null, 2));
 
-console.log("✅ Silver KPIs updated with full 5-stage lifecycle and sales data in tallos.");
+console.log("✅ Silver KPIs y Bitácora histórica actualizadas con éxito.");
